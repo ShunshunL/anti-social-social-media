@@ -1,69 +1,11 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Anti Social Social Media
 
-## Available Scripts
+This is an app that is inspired by Instagram but leaves the mental illness inducing part out of it. This app lets you upload photographs but you cannot upload selfies or people in photos. This app does not have hidden advertisements. This app will bring you peace instead of anxiety from people's faces and lifestyles. When you can't upload selfies and faces, it'll greatly reduce people misusing the platform to advertise / to profit / to propate their own agenda. There are people out there with social anxiety but they want to connect with people too. It's just harder for them. Instagram is a great platform to connect but it also brings anxiety/depression with it. It is filled with people who post over-edited selfies to gain likes and make money. I want to make an app that would bring the best parts of social media apps and leave out the part that is affecting people's mental health negatively. I just really miss the beginning of Instagram where most photos are posted because of in hope of sharing something beautiful. I hope this could bring people together positively and bring happiness into our lives. 
 
-In the project directory, you can run:
+## Built With
 
-### `yarn start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-# anti-social-social-media
+* [React](https://reactjs.org/) - The JavaScript library used to build the frontend 
+* [React Hooks](https://reactjs.org/docs/hooks-reference.html) - Technology used instead of redux for state management 
+* [Apollo Client](https://www.apollographql.com/docs/react/) - Another state management library used for caching and updating UI(compatible with GraphQL)
+* [GraphQL](https://graphql.org/) - A query language for API, used for predictable api results and easy querying(only one endpoint)
+* [Hasura](https://hasura.io/) - The backend API builder, it uses GraphQL on PostgresSQL. It gives you a console to write schema on. It also makes it super easy to test out queries as you go. 
