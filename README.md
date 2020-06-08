@@ -14,7 +14,7 @@ This is an app that is inspired by Instagram but leaves the mental illness-induc
 
 ## Routes 
 
-- / (Feed Page)
+### / (Feed Page)
   
 Components: 
 
@@ -22,14 +22,14 @@ Components:
 - FeedPostSkeleton 
 - FeedSideSuggestions
 
-- /explore (explore page)
+### /explore (explore page)
 
 Components: 
  
 - ExploreSuggestions
 - ExploreGrid
 
-- /p/:postId (Single Post Page)
+### /p/:postId (Single Post Page)
 
 Components: 
  
@@ -38,26 +38,26 @@ Components:
 - PostModal 
 - MorePostsFromUser
 
-- Notifications: 
+### Notifications: 
 
 Components: 
 
 - NotificationList 
 - NotificationToolTip
 
-- /:username (Profile Page)
+### /:username (Profile Page)
 
 Components: 
 
 - ProfileTabs
 
-- /accounts/edit/ (Edit Profile Page)
+### /accounts/edit/ (Edit Profile Page)
 
-- /accounts/login (Login Page)
+### /accounts/login (Login Page)
 
-- /accounts/emailsignup/
+### /accounts/emailsignup/
 
-- Not Found Page
+### Not Found Page
 
 ## Shared Components 
 
