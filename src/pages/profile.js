@@ -6,10 +6,11 @@ import { Hidden, Card, CardContent, Button, Typography, Dialog, Zoom, Divider, D
 import ProfilePicture from '../components/shared/ProfilePicture'
 import { Link } from "react-router-dom"
 import { GearIcon } from '../icons'
+import ProfileTabs from '../components/profile/ProfileTabs'
 
 function ProfilePage() {
   const classes = useProfilePageStyles()
-  let isOwner = false
+  let isOwner = true
   const [showOptionsMenu, setOptionsMenu] = React.useState(false)
   
   function handleOptionsMenuClick() {
@@ -45,6 +46,7 @@ function ProfilePage() {
         </Card>
       </Hidden>
       {showOptionsMenu && <OptionsMenu handleCloseMenu={handleCloseMenu} />}
+      <ProfileTabs user={defaultCurrentUser} isOwner={isOwner} />
     </div>
   </Layout>
 }
