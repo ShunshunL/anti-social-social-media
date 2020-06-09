@@ -27,8 +27,8 @@ function ProfilePage() {
           <ProfilePicture isOwner={isOwner} />
           <CardContent className={classes.cardContentLarge} >
             <ProfileNameSection user={defaultCurrentUser} isOwner={isOwner} handleOptionsMenuClick={handleOptionsMenuClick} />
-            <PostCountSection />
-            <NameBioSection />
+            <PostCountSection user={defaultCurrentUser} />
+            <NameBioSection user={defaultCurrentUser} />
           </CardContent>
         </Card>
       </Hidden>
@@ -39,9 +39,9 @@ function ProfilePage() {
               <ProfilePicture size={77} isOwner={isOwner} />
               <ProfileNameSection user={defaultCurrentUser} isOwner={isOwner} handleOptionsMenuClick={handleOptionsMenuClick} />
             </section>
-            <NameBioSection />
+            <NameBioSection user={defaultCurrentUser} />
           </CardContent>
-          <PostCountSection />
+          <PostCountSection user={defaultCurrentUser} />
         </Card>
       </Hidden>
       {showOptionsMenu && <OptionsMenu handleCloseMenu={handleCloseMenu} />}
@@ -154,12 +154,61 @@ function UnfollowDialog({ onClose, user }) {
   )
 }
 
-function PostCountSection() {
-  return <>PostCountSection</>
+function PostCountSection({ user }) {
+  const classes = useProfilePageStyles()
+  const options = ["posts", "followers", "following"]
+
+  return (
+    <>
+      <Hidden smUp>
+        <Divider />
+      </Hidden>
+      <section className={classes.followingSection}>
+        {options.map(option => (
+          <div key={option} className={classes.followingText}>
+            <Typography className={classes.followingCount}>
+              {user[option].length}
+            </Typography>
+            <Hidden xsDown>
+              <Typography>
+                {option}
+              </Typography>
+            </Hidden>
+            <Hidden smUp>
+              <Typography color="textSecondary">
+                {option}
+              </Typography>
+            </Hidden>
+          </div>
+        ))}
+      </section>
+      <Hidden smUp>
+        <Divider />
+      </Hidden>
+    </>
+  )
 }
 
-function NameBioSection() {
-  return <>NameBioSection</>
+function NameBioSection({ user }) {
+  const classes = useProfilePageStyles()
+  const { name, bio, website } = user
+
+  return (
+    <section className={classes.section}>
+      <Typography className={classes.typography}>
+        {name}
+      </Typography>
+      <Typography>
+        {bio}
+      </Typography>
+      {/* prevent cyber attacks => noopener noreferrer */}
+      <a href={website} target="_blank" rel="noopener noreferrer">
+        <Typography color="secondary" className={classes.typography}>
+          {website}
+        </Typography>
+      </a>
+    </section>
+  )
 }
 
 function OptionsMenu({ handleCloseMenu }) {

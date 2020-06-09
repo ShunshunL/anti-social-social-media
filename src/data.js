@@ -67,6 +67,7 @@ export const defaultCurrentUser = {
   email: "me@gmail.com",
   bio: "This is my bio",
   phone_number: "555-555-5555",
+  website: "https://hello-from-me.com",
   posts: Array.from({ length: 10 }, () => getDefaultPost()),
   followers: [defaultUser],
   following: [defaultUser]
