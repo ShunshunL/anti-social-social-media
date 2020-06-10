@@ -55,8 +55,14 @@ function AuthProvider({ children }) {
   }, []);
 
   const signInWithGoogle = async () => {
-    await firebase.auth().signInWithPopup(provider);
+    const data = await firebase.auth().signInWithPopup(provider);
+    console.log({ data })
   };
+
+  const signInWithEmailAndPassword = async (email, password) => {
+    const data = await firebase.auth().signInWithEmailAndPassword(email, password)
+    return data
+  } 
 
   const signUpWithEmailAndPassword = async (formData) => {
     const data = await firebase.auth().createUserWithEmailAndPassword(formData.email, formData.password)
@@ -85,7 +91,7 @@ function AuthProvider({ children }) {
      return null;
   } else {
     return (
-      <authContext.Provider value={{authState, signInWithGoogle, signOut, signUpWithEmailAndPassword }}>
+      <authContext.Provider value={{authState, signInWithGoogle, signOut, signUpWithEmailAndPassword, signInWithEmailAndPassword }}>
         {children}
       </authContext.Provider>
     );

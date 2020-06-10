@@ -225,7 +225,7 @@ function OptionsMenu({ handleCloseMenu }) {
     setTimeout(() => {
       signOut()
       history.push("/accounts/login")
-    }, 1500)
+    }, 1000)
   }
 
   return (

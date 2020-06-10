@@ -10,10 +10,16 @@ import SignupPage from './pages/signup'
 import NotFoundPage from './pages/not-found'
 import PostModal from './components/post/PostModal'
 import { authContext } from "./auth"
+import { useSubscription } from '@apollo/react-hooks'
+import { CURRENT_USER } from "./graphql/subscriptions"
+import LoadingScreen from "./components/shared/LoadingScreen"
 
 function App() {
   const { authState } = React.useContext(authContext)
   const isAuthed = authState.status === 'in'
+  const userId = isAuthed ? authState.user.uid : null
+  const variables = {userId}
+  const {data, loading} = useSubscription(CURRENT_USER, { variables })
   const history = useHistory()
   const location = useLocation()
   const prevLocation = React.useRef(location)
@@ -25,7 +31,8 @@ function App() {
     }
   }, [location, modal, history.action])
 
-  const isModalOpen = modal && prevLocation.current !== location
+
+  if (loading) return <LoadingScreen />
 
   if (!isAuthed) {
     return (
@@ -37,8 +44,15 @@ function App() {
     )
   }
 
+  const isModalOpen = modal && prevLocation.current !== location
+
+  // console.log(data)
+
+  const currentUser = isAuthed && data ? data.users[0] : null
+  const currentUserId = currentUser.id
+
   return (
-    <>
+    <UserContext.Provider value={{ currentUser, currentUserId}}>
       <Switch location={isModalOpen ? prevLocation.current : location}>
         <Route exact path="/" component={FeedPage} />
         <Route path="/explore" component={ExplorePage} />
@@ -50,8 +64,10 @@ function App() {
         <Route path="*" component={NotFoundPage} />
       </Switch>
       {isModalOpen && <Route exact path="/p/:postId" component={PostModal} />}
-    </>
+    </UserContext.Provider>
   )
 }
+
+export const UserContext = React.createContext()
 
 export default App

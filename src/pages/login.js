@@ -1,11 +1,62 @@
 import React from "react"
 import { useLoginPageStyles } from "../styles"
 import SEO from "../components/shared/Seo"
-import { Card, CardHeader, TextField, Button, Typography } from "@material-ui/core"
-import { Link } from "react-router-dom"
+import { Card, CardHeader, TextField, Button, Typography, InputAdornment } from "@material-ui/core"
+import { Link, useHistory } from "react-router-dom"
+import { useForm } from 'react-hook-form'
+import { authContext } from "../auth"
+import validator from 'validator';
+import { useApolloClient } from "@apollo/react-hooks"
+import { GET_USER_EMAIL } from "../graphql/queries"
+import { AuthError } from './signup'
+
 
 function LoginPage() {
   const classes = useLoginPageStyles()
+  const { register, handleSubmit, watch, formState } = useForm({ mode: 'onBlur'})
+  const [showPassword, setTogglePassword] = React.useState(false)
+  const isPasswordNotEmpty = Boolean(watch('password'))
+  const { signInWithEmailAndPassword } = React.useContext(authContext)
+  const history = useHistory()
+  const client = useApolloClient()
+  const [error, setError] = React.useState('')
+
+
+  async function onSubmit({ authInput, password }) {
+    try{
+      setError('')
+      // console.log(data)
+      if (!validator.isEmail(authInput)) {
+        authInput = await getUserEmail(authInput)
+      }
+      console.log(authInput)
+      await signInWithEmailAndPassword(authInput, password)
+      setTimeout(() => history.push('/'), 0) 
+    } catch(error) {
+      console.error('error signing up', error)
+      handleError(error)
+    }
+  }
+
+  function handleError(error) {
+    if (error.code.includes('auth')) {
+      setError(error.message)
+    }
+  }
+
+  async function getUserEmail(input) {
+    const variables = { input }
+    const response = await client.query({
+      query: GET_USER_EMAIL,
+      variables
+    })
+    const email = response.data.users[0]?.email || "not@email.co"
+    return email
+  }
+
+  function togglePassword() {
+    setTogglePassword(prev => !prev)
+  }
 
   return (
     <>
@@ -14,20 +65,39 @@ function LoginPage() {
         <article>
           <Card className={classes.card}>
             <CardHeader className={classes.cardHeader} />
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <TextField 
+                name="authInput"
+                inputRef={register({
+                  required: true,
+                  minLength: 3
+                })}
                 fullWidth
                 variant="filled"
-                label="Username"
+                label="Username, email, or phone"
                 margin="dense"
                 className={classes.textField}
                 autoComplete="username"
               />
               <TextField 
+                name="password"
+                inputRef={register({
+                  required: true,
+                  minLength: 5
+                })}
+                InputProps={{
+                  endAdornment: isPasswordNotEmpty && (
+                    <InputAdornment>
+                      <Button onClick={togglePassword}>
+                        {showPassword ? 'Hide' : 'Show'}
+                      </Button>
+                    </InputAdornment>
+                  )
+                }}
                 fullWidth
                 variant="filled"
                 label="Password"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 margin="dense"
                 className={classes.textField}
                 autoComplete="current-password"
@@ -42,6 +112,7 @@ function LoginPage() {
                 Log In   
               </Button>
             </form>
+            <AuthError error={error} />
             <Button fullWidth color="secondary">
               <Typography variant="caption">
                 Forgot password?

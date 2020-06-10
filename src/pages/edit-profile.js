@@ -3,12 +3,23 @@ import { useEditProfilePageStyles } from "../styles"
 import Layout from '../components/shared/Layout'
 import { IconButton, Hidden, Drawer, List, ListItem, ListItemText, Typography, TextField, Button } from "@material-ui/core"
 import { Menu } from '@material-ui/icons'
-import { defaultCurrentUser } from "../data"
 import ProfilePicture from '../components/shared/ProfilePicture'
+import { UserContext } from "../App"
+import { useQuery, useMutation } from "@apollo/react-hooks"
+import { GET_EDIT_USER } from "../graphql/queries"
+import LoadingScreen from "../components/shared/LoadingScreen"
+import { useForm } from 'react-hook-form'
+import handleImageUpload from "../utils/handleImageUpload"
+import { EDIT_USER_AVATAR } from "../graphql/mutation"
 
 function EditProfilePage({ history }) {
   const classes = useEditProfilePageStyles()
   const [showSideTabs, setSideTabs] = React.useState(false)
+  const { currentUserId } = React.useContext(UserContext)
+  const variables = { id: currentUserId }
+  const {data, loading} = useQuery(GET_EDIT_USER, { variables })
+
+  if (loading) return <LoadingScreen />
 
   function handleToggleSideTabs() {
     setSideTabs(prev => !prev)
@@ -74,7 +85,7 @@ function EditProfilePage({ history }) {
           </Hidden>
         </nav>
         <main>
-          {history.location.pathname.includes('edit') && <EditUserInfo user={defaultCurrentUser} />}
+          {history.location.pathname.includes('edit') && <EditUserInfo user={data.users_by_pk} />}
         </main>
       </section>
     </Layout>
@@ -83,18 +94,32 @@ function EditProfilePage({ history }) {
 
 function EditUserInfo({ user }) {
   const classes = useEditProfilePageStyles()
+  const {register, handleSubmit} = useForm({ mode: 'onBlur' })
+  const [editUserAvatar] = useMutation(EDIT_USER_AVATAR)
+  const [avatar, setAvatar] = React.useState(user.profile_image)
+
+  async function handleProfilePic(event) {
+     const url = await handleImageUpload(event.target.files[0])
+    //  console.log({url})
+    const variables = { id: user.id, profileImage: url }
+    await editUserAvatar({ variables })
+    setAvatar(url)
+  }
 
   return (
     <section className={classes.container}>
       <div className={classes.pictureSectionItem}>
-        <ProfilePicture size={38} user={user} />
+        <ProfilePicture size={38} image={avatar} />
         <div className={classes.justifySelfStart}>
           <Typography className={classes.typography}>
             {user.username}
           </Typography>
-          <Typography color="primary" variant="body2" className={classes.typographyChangePic}>
-            Change Profile Photo
-          </Typography>
+          <input accept="image/*" id="image" type="file" style={{ display: 'none' }} onChange={handleProfilePic} />
+          <label htmlFor="image">
+            <Typography color="primary" variant="body2" className={classes.typographyChangePic}>
+              Change Profile Photo
+            </Typography>
+          </label>
         </div>
       </div>
       <form className={classes.form}>
