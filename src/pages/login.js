@@ -39,7 +39,7 @@ function LoginPage() {
                 className={classes.button}
                 type="submit"
               >
-                Sign Up       
+                Log In   
               </Button>
             </form>
             <Button fullWidth color="secondary">

@@ -68,7 +68,7 @@ export const defaultCurrentUser = {
   bio: "This is my bio",
   phone_number: "555-555-5555",
   website: "https://hello-from-me.com",
-  posts: Array.from({ length: 10 }, () => getDefaultPost()),
+  posts: [],
   followers: [defaultUser],
   following: [defaultUser]
 };

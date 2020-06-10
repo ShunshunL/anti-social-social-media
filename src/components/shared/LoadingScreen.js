@@ -1,6 +1,6 @@
 import React from "react"
 import { useLoadingScreenStyles } from "../../styles"
-import { LoadingLargeIcon } from '../../icons'
+// import { LoadingLargeIcon } from '../../icons'
 
 function LoadingScreen() {
   const classes = useLoadingScreenStyles()

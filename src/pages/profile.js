@@ -4,9 +4,10 @@ import Layout from "../components/shared/Layout"
 import { defaultCurrentUser } from '../data'
 import { Hidden, Card, CardContent, Button, Typography, Dialog, Zoom, Divider, DialogTitle, Avatar } from "@material-ui/core"
 import ProfilePicture from '../components/shared/ProfilePicture'
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import { GearIcon } from '../icons'
 import ProfileTabs from '../components/profile/ProfileTabs'
+import { authContext } from "../auth"
 
 function ProfilePage() {
   const classes = useProfilePageStyles()
@@ -216,9 +217,15 @@ function NameBioSection({ user }) {
 function OptionsMenu({ handleCloseMenu }) {
   const classes = useProfilePageStyles()
   const [showLogoutMessage, setLogoutMessage] = React.useState(false)
+  const {signOut} = React.useContext(authContext)
+  const history = useHistory()
 
   function handleLogoutClick() {
     setLogoutMessage(true)
+    setTimeout(() => {
+      signOut()
+      history.push("/accounts/login")
+    }, 1500)
   }
 
   return (

@@ -610,7 +610,7 @@ export const useFeedPostStyles = makeStyles(theme => ({
     alignItems: "center"
   },
   expanded: {
-    display: "block"
+    display: "inline-block"
   },
   caption: {
     fontFamily: `-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", Helvetica, Arial, sans-serif`,
@@ -984,10 +984,11 @@ const sectionItem = {
   gridAutoFlow: "column",
   gridGap: 30,
   placeItems: "start end",
-  marginBottom: 16,
+  marginBottom: 18,
   gridTemplateColumns: "minmax(auto, 150px) minmax(auto, 340px)"
 };
 const typography = {
+  marginTop: "6px !important",
   fontWeight: "600 !important"
 };
 const justifySelfStart = {
@@ -1597,6 +1598,8 @@ export const useProfileTabsStyles = makeStyles(theme => {
       width: 18
     },
     profilePostsSection: {
+      display: 'flex',
+      justifyContent: 'center',
       paddingTop: 60
     },
     noPicDivAlt: {
