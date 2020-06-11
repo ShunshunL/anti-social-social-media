@@ -35,3 +35,17 @@ query getEditUser($id: uuid!) {
 }
 
 `
+
+export const FIND_USER = gql`
+  query findUser($query: String) {
+  users(where: {
+    _or: [{ username: { _ilike: $query}}, { name: { _ilike: $query}}]
+  }) {
+    id 
+    username
+    name
+    profile_image
+  }
+}
+
+`

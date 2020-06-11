@@ -7,6 +7,9 @@ import { defaultCurrentUser, getDefaultUser } from "../../data"
 import NotificationTooltip from '../notification/NotificationTooltip'
 import NotificationList from '../notification/NotificationList'
 import AddPostDialog from "../post/AddPostDialog"
+import { useLazyQuery } from "@apollo/react-hooks"
+import { FIND_USER } from "../../graphql/queries"
+import { UserContext } from "../../App"
 // Navbar progress loading
 // import {useNProgress} from '@tanem/react-nprogress'
 
@@ -54,12 +57,21 @@ function Search({ history }) {
   const [results, setResults] = React.useState([])
   const [loading, setLoading] = React.useState(false)
 
+  // synchronous 
+  const [findUser, { data }] = useLazyQuery(FIND_USER)
+
   const hasResults = Boolean(query) && results.length > 0 
 
   React.useEffect(() => {
     if (!query.trim()) return
-    setResults(Array.from({ length: 5 }, () => getDefaultUser()))
-  }, [query])
+    setLoading(true)
+    const variables = { query: `%${query}%`}
+    findUser({ variables })
+    if (data) {
+      setResults(data.users)
+      setLoading(false)
+    }
+  }, [query, data, findUser])
 
   function handleClearInput() {
     setQuery('')
@@ -108,6 +120,7 @@ function Links({ path }) {
   const inputRef = React.useRef()
   const [postImg, setPostImg] = React.useState(null)
   const [addPostDialog, setAddPostDialog] = React.useState(false)
+  const {currentUser} = React.useContext(UserContext)
 
   React.useEffect(() => {
     const timeout = setTimeout(handleHideTooptip, 5000)
@@ -162,10 +175,10 @@ function Links({ path }) {
             {showList ? <LikeActiveIcon /> : <LikeIcon />}
           </div>
         {/* </RedTooltip> */}
-        <Link to={`/${defaultCurrentUser.username}`}>
-          <div className={path === `/${defaultCurrentUser.username}` ? classes.profileActive : ""}>
+        <Link to={`/${currentUser.username}`}>
+          <div className={path === `/${currentUser.username}` ? classes.profileActive : ""}>
           </div>
-          <Avatar src={defaultCurrentUser.profile_image} className={classes.profileImage} />
+          <Avatar src={currentUser.profile_image} className={classes.profileImage} />
         </Link>
       </div>
     </div>

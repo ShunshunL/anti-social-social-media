@@ -101,11 +101,15 @@ function AuthProvider({ children }) {
     setAuthState({ status: "out" });
   };
 
+  const updateEmail = async (email) => {
+    await authState.user.updateEmail(email)
+  }
+
   if (authState.status === "loading") {
      return null;
   } else {
     return (
-      <authContext.Provider value={{authState, signInWithGoogle, signOut, signUpWithEmailAndPassword, signInWithEmailAndPassword }}>
+      <authContext.Provider value={{authState, signInWithGoogle, signOut, signUpWithEmailAndPassword, signInWithEmailAndPassword, updateEmail }}>
         {children}
       </authContext.Provider>
     );
