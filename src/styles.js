@@ -118,7 +118,7 @@ export const useLoginPageStyles = makeStyles({
     height: 1,
     background: "#e6e6e6"
   },
-  facebookIcon: {
+  googleIcon: {
     height: 16,
     width: 16,
     marginRight: 8

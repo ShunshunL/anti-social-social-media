@@ -7,6 +7,8 @@ function GridPost({ post }) {
   const classes = useGridPostStyles()
   const history = useHistory()
 
+  // pushed modal to history so that app can display acccordingly 
+
   function handleOpenPostModal() {
     history.push({
       pathname: `/p/${post.id}`,

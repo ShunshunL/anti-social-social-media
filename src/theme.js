@@ -16,13 +16,13 @@ const theme = createMuiTheme({
       main: "#7649fe"
     },
     secondary: {
-      main: "#385185"
+      main: "#4977fe"
     },
     error: {
       main: "#ed4956"
     },
     background: {
-      default: "#fafafa"
+      default: "#fbf9ff"
     }
   },
   overrides: {

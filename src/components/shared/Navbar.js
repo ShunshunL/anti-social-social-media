@@ -6,6 +6,7 @@ import { LoadingIcon, AddIcon, LikeIcon, LikeActiveIcon, ExploreIcon, ExploreAct
 import { defaultCurrentUser, getDefaultUser } from "../../data"
 import NotificationTooltip from '../notification/NotificationTooltip'
 import NotificationList from '../notification/NotificationList'
+import AddPostDialog from "../post/AddPostDialog"
 // Navbar progress loading
 // import {useNProgress} from '@tanem/react-nprogress'
 
@@ -104,6 +105,9 @@ function Links({ path }) {
   const classes = useNavbarStyles()
   const [showList, setList] = React.useState(false)
   const [showTooptip, setTooptip] = React.useState(true)
+  const inputRef = React.useRef()
+  const [postImg, setPostImg] = React.useState(null)
+  const [addPostDialog, setAddPostDialog] = React.useState(false)
 
   React.useEffect(() => {
     const timeout = setTimeout(handleHideTooptip, 5000)
@@ -123,13 +127,28 @@ function Links({ path }) {
   function handleHideLists() {
     setList(false)
   }
+
+  function openFileInput() {
+    inputRef.current.click()
+  }
+
+  function handleAddPost(event) {
+    setPostImg(event.target.files[0])
+    setAddPostDialog(true)
+  }
+
+  function handleClose() {
+    setAddPostDialog(false)
+  }
   
   return (
     <div className={classes.linksContainer}>
       {showList && <NotificationList handleHideLists={handleHideLists} />}
       <div className={classes.linksWrapper}>
+        {addPostDialog && <AddPostDialog postImg={postImg} handleClose={handleClose} />}
         <Hidden xsDown>
-          <AddIcon />
+          <input type="file" style={{ display: "none"}} ref={inputRef} onChange={handleAddPost} />
+          <AddIcon onClick={openFileInput} />
         </Hidden>
         <Link to="/">
           {path === "/" ? <HomeActiveIcon /> : <HomeIcon /> }
@@ -137,11 +156,12 @@ function Links({ path }) {
         <Link to="/explore">
           {path === "/explore" ? <ExploreActiveIcon /> : <ExploreIcon /> }
         </Link>
-        <RedTooltip arrow open={showTooptip} onOpen={handleHideTooptip} TransitionComponent={Zoom} title={<NotificationTooltip />} >
-          <div className={classes.notifications} onClick={handleToggleList}>
+        {/* <RedTooltip arrow open={showTooptip} onOpen={handleHideTooptip} TransitionComponent={Zoom} title={<NotificationTooltip />} > */}
+          <div  onClick={handleToggleList}>
+          {/* className={classes.notifications} */}
             {showList ? <LikeActiveIcon /> : <LikeIcon />}
           </div>
-        </RedTooltip>
+        {/* </RedTooltip> */}
         <Link to={`/${defaultCurrentUser.username}`}>
           <div className={path === `/${defaultCurrentUser.username}` ? classes.profileActive : ""}>
           </div>

@@ -18,3 +18,12 @@ export const EDIT_USER_AVATAR = gql`
     }
   }
 `;
+
+export const EDIT_USER = gql`
+  mutation editUser($id: uuid!, $name: String!, $username: String!, $bio: String!, $email: String!, $phoneNumber: String!, $website: String! ) {
+  update_users(where: {id: {_eq: $id}}, _set: {bio: $bio, email: $email, name: $name, phone_number: $phoneNumber, username: $username, website: $website}) {
+    affected_rows
+  }
+}
+
+`

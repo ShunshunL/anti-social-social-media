@@ -112,6 +112,16 @@ function LoginPage() {
                 Log In   
               </Button>
             </form>
+            <div className={classes.orContainer}>
+              <div className={classes.orLine} />
+              <div>
+                <Typography variant="body2" color="textSecondary">
+                  OR
+                </Typography>
+              </div>
+              <div className={classes.orLine} />
+            </div>
+            <LoginWithGoogle color="secondary" />
             <AuthError error={error} />
             <Button fullWidth color="secondary">
               <Typography variant="caption">
@@ -134,5 +144,38 @@ function LoginPage() {
     </>
   )
 }
+
+export function LoginWithGoogle({ color, variant }) {
+  const classes = useLoginPageStyles();
+  const { signInWithGoogle } = React.useContext(authContext);
+  const [error, setError] = React.useState("");
+  const history = useHistory();
+
+  async function handleLogInWithGoogle() {
+    try {
+      await signInWithGoogle();
+      setTimeout(() => history.push("/"), 0);
+    } catch (error) {
+      console.error("Error logging in with Google", error);
+      setError(error.message);
+    }
+  }
+
+  return (
+    <>
+      <Button
+        onClick={handleLogInWithGoogle}
+        fullWidth
+        color={color}
+        variant={variant}
+      >
+       <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="google icon" className={classes.googleIcon}/>
+        Log In with Google
+      </Button>
+      <AuthError error={error} />
+    </>
+  );
+}
+
 
 export default LoginPage
