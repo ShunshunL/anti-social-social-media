@@ -9,6 +9,20 @@ export const CURRENT_USER = gql`
     username
     profile_image
     last_checked
+    notifications(order_by: { created_at: desc }) {
+      id 
+      type 
+      created_at 
+      post {
+        id 
+        image 
+      }
+      user {
+        id 
+        username
+        profile_image
+      }
+    }
   }
 }
 

@@ -1,20 +1,27 @@
 import React from "react"
 import { useNavbarStyles } from "../../styles"
 import { Typography } from "@material-ui/core"
+         
 
-function NotificationTooltip() {
+function NotificationTooltip({ notifications }) {
   const classes = useNavbarStyles()
+  const followCount = countNotifications('follow')
+  const likeCount = countNotifications('like')
+
+  function countNotifications(notificationType) {
+    return notifications.filter(({ type }) => type === notificationType).length
+  }
 
   return (
     <div className={classes.tooltipContainer}>
-      <div className={classes.tooltip}>
+      {followCount > 0 && <div className={classes.tooltip}>
         <span aria-label="Followers" className={classes.followers} />
-        <Typography>1</Typography>
-      </div>
-      <div className={classes.tooltip}>
+        <Typography>{followCount}</Typography>
+      </div>}
+      {likeCount > 0 && <div className={classes.tooltip}>
         <span aria-label="Likes" className={classes.likes} />
-        <Typography>1</Typography>
-      </div>
+        <Typography>{likeCount}</Typography>
+      </div>}
     </div>
   )
 }

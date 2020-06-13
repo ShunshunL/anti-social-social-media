@@ -12,6 +12,8 @@ import { useSubscription, useMutation } from "@apollo/react-hooks"
 import { GET_POST } from "../../graphql/subscriptions"
 import { UserContext } from "../../App"
 import { LIKE_POST, DELETE_LIKE, SAVE_POST, DELETE_SAVED_POST, CREATE_COMMENT } from "../../graphql/mutation"
+import { formatDateToNow, formatPostDate } from "../../utils/dateFormat"
+
 
 function Post({ postId }) {
   const classes = usePostStyles()
@@ -22,6 +24,7 @@ function Post({ postId }) {
   
   // setTimeout(() => setLoading(false), 2000)
   if (loading) return <PostSkeleton />
+  // debugger
   const { saved_posts, user_id, image, id, likes, user, caption, comments, created_at, location, likes_aggregate } = data.posts_by_pk
   const likesCount = likes_aggregate.aggregate.count
   
@@ -57,7 +60,7 @@ function Post({ postId }) {
             ))}
           </div>
           <Typography color="textSecondary" className={classes.datePosted}>
-            5 DAYS AGO
+            {formatPostDate(created_at)}
           </Typography>
           <Hidden xsDown>
             <div className={classes.comment}>
@@ -86,7 +89,7 @@ function Caption({ user, caption, createdAt}) {
           <Typography variant="body2" component="span" className={classes.postCaption} style={{ paddingLeft: 0 }} dangerouslySetInnerHTML={{ __html: caption }} />
         </Link>
         <Typography style={{ marginTop: 16, marginBottom: 4, display: 'inline-block' }} color="textSecondary" variant="caption">
-          {createdAt}
+          {formatDateToNow(createdAt)}
         </Typography>
       </div>
     </div>
@@ -109,7 +112,7 @@ function UserComment({ comment }) {
           </Typography>
         </Link>
         <Typography style={{ marginTop: 16, marginBottom: 4, display: 'inline-block' }} color="textSecondary" variant="caption">
-          {comment.created_at}
+          {formatDateToNow(comment.created_at)}
         </Typography>
       </div>
     </div>
@@ -129,7 +132,7 @@ function LikeButton({ likes, authorId, postId }) {
   const variables = {
     postId,
     userId: currentUserId,
-    // profileId: authorId 
+    profileId: authorId 
   }
 
 
@@ -190,6 +193,7 @@ function Comment({ postId }) {
       userId: currentUserId
     }
     createComment({ variables })
+    setContent('')
   }
 
   return (

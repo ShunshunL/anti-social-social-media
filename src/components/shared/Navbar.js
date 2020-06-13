@@ -10,6 +10,7 @@ import AddPostDialog from "../post/AddPostDialog"
 import { useLazyQuery } from "@apollo/react-hooks"
 import { FIND_USER } from "../../graphql/queries"
 import { UserContext } from "../../App"
+import { isAfter } from "date-fns"
 // Navbar progress loading
 // import {useNProgress} from '@tanem/react-nprogress'
 
@@ -116,11 +117,14 @@ function Search({ history }) {
 function Links({ path }) {
   const classes = useNavbarStyles()
   const [showList, setList] = React.useState(false)
-  const [showTooptip, setTooptip] = React.useState(true)
   const inputRef = React.useRef()
   const [postImg, setPostImg] = React.useState(null)
   const [addPostDialog, setAddPostDialog] = React.useState(false)
-  const {currentUser} = React.useContext(UserContext)
+  const {currentUser, currentUserId} = React.useContext(UserContext)
+  const newNotifications = currentUser.notifications.filter(({ created_at }) => isAfter(new Date(created_at), new Date(currentUser.last_checked)))
+  // console.log(newNotifications)
+  const hasNotifications = newNotifications.length > 0
+  const [showTooptip, setTooptip] = React.useState(hasNotifications)
 
   React.useEffect(() => {
     const timeout = setTimeout(handleHideTooptip, 5000)
@@ -156,7 +160,7 @@ function Links({ path }) {
   
   return (
     <div className={classes.linksContainer}>
-      {showList && <NotificationList handleHideLists={handleHideLists} />}
+      {showList && <NotificationList currentUserId={currentUserId} notifications={currentUser.notifications} handleHideLists={handleHideLists} />}
       <div className={classes.linksWrapper}>
         {addPostDialog && <AddPostDialog postImg={postImg} handleClose={handleClose} />}
         <Hidden xsDown>
@@ -169,12 +173,11 @@ function Links({ path }) {
         <Link to="/explore">
           {path === "/explore" ? <ExploreActiveIcon /> : <ExploreIcon /> }
         </Link>
-        {/* <RedTooltip arrow open={showTooptip} onOpen={handleHideTooptip} TransitionComponent={Zoom} title={<NotificationTooltip />} > */}
-          <div  onClick={handleToggleList}>
-          {/* className={classes.notifications} */}
+        <RedTooltip arrow open={showTooptip} onOpen={handleHideTooptip} TransitionComponent={Zoom} title={<NotificationTooltip notifications={newNotifications} />} >
+          <div onClick={handleToggleList} className={ hasNotifications ? classes.notifications : ''}>
             {showList ? <LikeActiveIcon /> : <LikeIcon />}
           </div>
-        {/* </RedTooltip> */}
+        </RedTooltip>
         <Link to={`/${currentUser.username}`}>
           <div className={path === `/${currentUser.username}` ? classes.profileActive : ""}>
           </div>

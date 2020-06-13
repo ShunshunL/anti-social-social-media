@@ -16,23 +16,27 @@ function GridPost({ post }) {
     })
   }
 
+
+  const commentsCount = post.comments_aggregate.aggregate.count
+  const likesCount = post.likes_aggregate.aggregate.count
+
   return (
     <div onClick={handleOpenPostModal} className={classes.gridPostContainer}>
       <div className={classes.gridPostOverlay}>
         <div className={classes.gridPostInfo}>
           <span className={classes.likes} />
           <Typography>
-            {post.likes}
+            {likesCount}
           </Typography>
         </div>
         <div className={classes.gridPostInfo}>
           <span className={classes.comments} />
           <Typography>
-            {post.comments.length}
+            {commentsCount}
           </Typography>
         </div>
       </div>
-      <img src={post.media} alt="Post" className={classes.image} />
+      <img src={post.image} alt="Post" className={classes.image} />
     </div>
   )
 }

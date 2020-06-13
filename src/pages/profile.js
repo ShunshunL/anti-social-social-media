@@ -1,18 +1,30 @@
 import React from "react"
 import { useProfilePageStyles } from "../styles"
 import Layout from "../components/shared/Layout"
-import { defaultCurrentUser } from '../data'
+// import { defaultCurrentUser } from '../data'
 import { Hidden, Card, CardContent, Button, Typography, Dialog, Zoom, Divider, DialogTitle, Avatar } from "@material-ui/core"
 import ProfilePicture from '../components/shared/ProfilePicture'
-import { Link, useHistory } from "react-router-dom"
+import { Link, useHistory, useParams } from "react-router-dom"
 import { GearIcon } from '../icons'
 import ProfileTabs from '../components/profile/ProfileTabs'
 import { authContext } from "../auth"
+import { useQuery } from "@apollo/react-hooks"
+import { GET_USER_PROFILE } from "../graphql/queries"
+import LoadingScreen from "../components/shared/LoadingScreen"
+import { UserContext } from "../App"
 
 function ProfilePage() {
+  const { username } = useParams()
   const classes = useProfilePageStyles()
-  let isOwner = true
+  const { currentUserId } = React.useContext(UserContext)
   const [showOptionsMenu, setOptionsMenu] = React.useState(false)
+  const variables = {username}
+  const { data, loading } = useQuery(GET_USER_PROFILE, { variables })
+
+  if (loading) return <LoadingScreen />
+
+  const user = data.users[0]
+  const isOwner = user.id === currentUserId
   
   function handleOptionsMenuClick() {
     setOptionsMenu(true)
@@ -22,15 +34,15 @@ function ProfilePage() {
     setOptionsMenu(false)
   }
   
-  return <Layout title={`${defaultCurrentUser.name} (@${defaultCurrentUser.username})`}>
+  return <Layout title={`${user.name} (@${user.username})`}>
     <div className={classes.container}>
       <Hidden xsDown>
         <Card className={classes.cardLarge}>
-          <ProfilePicture isOwner={isOwner} />
+          <ProfilePicture image={user.profile_image} isOwner={isOwner} />
           <CardContent className={classes.cardContentLarge} >
-            <ProfileNameSection user={defaultCurrentUser} isOwner={isOwner} handleOptionsMenuClick={handleOptionsMenuClick} />
-            <PostCountSection user={defaultCurrentUser} />
-            <NameBioSection user={defaultCurrentUser} />
+            <ProfileNameSection user={user} isOwner={isOwner} handleOptionsMenuClick={handleOptionsMenuClick} />
+            <PostCountSection user={user} />
+            <NameBioSection user={user} />
           </CardContent>
         </Card>
       </Hidden>
@@ -38,16 +50,16 @@ function ProfilePage() {
         <Card className={classes.cardSmall}>
           <CardContent>
             <section className={classes.sectionSmall}>
-              <ProfilePicture size={77} isOwner={isOwner} />
-              <ProfileNameSection user={defaultCurrentUser} isOwner={isOwner} handleOptionsMenuClick={handleOptionsMenuClick} />
+              <ProfilePicture image={user.profile_image} size={77} isOwner={isOwner} />
+              <ProfileNameSection user={user} isOwner={isOwner} handleOptionsMenuClick={handleOptionsMenuClick} />
             </section>
-            <NameBioSection user={defaultCurrentUser} />
+            <NameBioSection user={user} />
           </CardContent>
-          <PostCountSection user={defaultCurrentUser} />
+          <PostCountSection user={user} />
         </Card>
       </Hidden>
       {showOptionsMenu && <OptionsMenu handleCloseMenu={handleCloseMenu} />}
-      <ProfileTabs user={defaultCurrentUser} isOwner={isOwner} />
+      <ProfileTabs user={user} isOwner={isOwner} />
     </div>
   </Layout>
 }
@@ -170,7 +182,7 @@ function PostCountSection({ user }) {
         {options.map(option => (
           <div key={option} className={classes.followingText}>
             <Typography className={classes.followingCount}>
-              {user[option].length}
+              {user[`${option}_aggregate`].aggregate.count}
             </Typography>
             <Hidden xsDown>
               <Typography>
@@ -205,11 +217,12 @@ function NameBioSection({ user }) {
         {bio}
       </Typography>
       {/* prevent cyber attacks => noopener noreferrer */}
-      <a href={website} target="_blank" rel="noopener noreferrer">
+     
         <Typography color="secondary" className={classes.typography}>
-          {website}
+          <a href={website} target="_blank" rel="noopener noreferrer">
+            {website}
+          </a>
         </Typography>
-      </a>
     </section>
   )
 }
