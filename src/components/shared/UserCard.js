@@ -2,9 +2,9 @@ import React from "react"
 import { useUserCardStyles } from "../../styles"
 import { Link } from "react-router-dom"
 import { Avatar, Typography } from "@material-ui/core"
-import { defaultUser } from '../../data'
+// import { defaultUser } from '../../data'
 
-function UserCard({ user=defaultUser, avatarSize = 45, location}) {
+function UserCard({ user, avatarSize = 45, location}) {
   const classes = useUserCardStyles({ avatarSize })
   const { username, profile_image, name } = user
 

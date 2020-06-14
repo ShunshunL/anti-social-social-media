@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { useNavbarStyles, WhiteTooltip, RedTooltip } from "../../styles"
 import { AppBar, Hidden, InputBase, Avatar, Fade, Grid, Typography, Zoom } from "@material-ui/core"
 import { LoadingIcon, AddIcon, LikeIcon, LikeActiveIcon, ExploreIcon, ExploreActiveIcon, HomeActiveIcon, HomeIcon } from "../../icons"
-import { defaultCurrentUser, getDefaultUser } from "../../data"
+// import { defaultCurrentUser, getDefaultUser } from "../../data"
 import NotificationTooltip from '../notification/NotificationTooltip'
 import NotificationList from '../notification/NotificationList'
 import AddPostDialog from "../post/AddPostDialog"

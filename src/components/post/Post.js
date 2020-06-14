@@ -13,6 +13,7 @@ import { GET_POST } from "../../graphql/subscriptions"
 import { UserContext } from "../../App"
 import { LIKE_POST, DELETE_LIKE, SAVE_POST, DELETE_SAVED_POST, CREATE_COMMENT } from "../../graphql/mutation"
 import { formatDateToNow, formatPostDate } from "../../utils/dateFormat"
+import Img from 'react-graceful-image'
 
 
 function Post({ postId }) {
@@ -38,7 +39,7 @@ function Post({ postId }) {
         </div>
         {/*  Post Image */}
         <div className={classes.postImage}>
-          <img src={image} alt="Post" className={classes.image} />  
+          <Img src={image} alt="Post" className={classes.image} />  
         </div>
         {/*  Post Buttons */}
         <div className={classes.postButtonsWrapper}>
@@ -70,7 +71,7 @@ function Post({ postId }) {
           </Hidden>
         </div>
       </article>
-      {showOptionsDialog && <OptionsDialog onClose={() => setOptionsDialog(false)} />}
+      {showOptionsDialog && <OptionsDialog postId={id} authorId={user.id}  onClose={() => setOptionsDialog(false)} />}
     </div>
   )
 }

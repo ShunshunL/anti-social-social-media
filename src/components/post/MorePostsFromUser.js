@@ -2,7 +2,7 @@ import React from "react"
 import { useMorePostsFromUserStyles } from "../../styles"
 import { Typography } from "@material-ui/core"
 import { LoadingLargeIcon } from "../../icons"
-import { getDefaultPost, defaultUser } from "../../data"
+// import { getDefaultPost, defaultUser } from "../../data"
 import GridPost from '../shared/GridPost'
 import { Link } from "react-router-dom"
 import { useQuery, useLazyQuery } from "@apollo/react-hooks"

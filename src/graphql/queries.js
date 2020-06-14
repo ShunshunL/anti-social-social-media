@@ -176,3 +176,49 @@ export const GET_POST = gql`
 }
 
 `
+
+export const GET_FEEDS = gql`
+query getFeeds($limit: Int!, $feedIds: [uuid!]!, $lastTimestamp: timestamptz) {
+  posts(limit: $limit, where: {user_id: {_in: $feedIds}, created_at: {_lt: $lastTimestamp}}, order_by: {created_at: desc}) {
+    id
+    caption
+    created_at
+    image
+    location
+    user {
+      id
+      name
+      username
+      profile_image
+    }
+    likes_aggregate {
+      aggregate {
+        count
+      }
+    }
+    likes {
+      id
+      user_id
+    }
+    saved_posts {
+      id
+      user_id
+    }
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+    comments(order_by: {created_at: desc}, limit: 2) {
+      id
+      content
+      created_at
+      user {
+        username
+      }
+    }
+  }
+}
+
+
+`
