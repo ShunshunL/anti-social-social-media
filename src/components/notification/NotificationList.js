@@ -51,7 +51,7 @@ function NotificationList({ handleHideLists, notifications, currentUserId }) {
             <div>
               {isLike && (
                 <Link to={`/p/${notification.post.id}`}>
-                  <Avatar src={notification.post.media} alt="post cover" />
+                  <Avatar src={notification.post.image} alt="post cover" />
                 </Link>
               )}
               {isFollow && <FollowButton id={notification.user.id} />}

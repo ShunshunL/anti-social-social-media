@@ -1,6 +1,6 @@
 import React from "react"
 import { useLoadingScreenStyles } from "../../styles"
-// import { LoadingLargeIcon } from '../../icons'
+import logo from '../../images/icon.png'
 
 function LoadingScreen() {
   const classes = useLoadingScreenStyles()
@@ -8,8 +8,7 @@ function LoadingScreen() {
   return (
     <section className={classes.section}>
       <span>
-        {/* <LoadingLargeIcon /> */}
-        <img style={{width: 300, marginBottom: 50}} src="https://fontmeme.com/permalink/200607/6b50f32a2790edff0cbdefd02aa12b9c.png" alt='logo' />
+        <img style={{ width: 100, marginBottom: 50}} src={logo} alt='logo' />
       </span>
     </section>
   )

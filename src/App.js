@@ -22,8 +22,8 @@ function App() {
   const {data, loading} = useSubscription(CURRENT_USER, { variables })
   const history = useHistory()
   const location = useLocation()
-  console.log(history)
-  console.log(location)
+  // console.log(history)
+  // console.log(location)
   const prevLocation = React.useRef(location)
   const modal = location.state?.modal
 

@@ -126,8 +126,8 @@ query suggestUsers($limit: Int!, $followerIds: [uuid!]!, $createdAt: timestamptz
 
 // most popular posts, newest to oldest, excluding ones that we already follow
 export const EXPLORE_POSTS = gql`
-query explorePost($followingIds: [uuid!]!) {
-  posts(order_by: {created_at: desc, likes_aggregate: {count: desc}, comments_aggregate: {count: desc}}, where: {id: {_nin: $followingIds}}) {
+query explorePost($feedIds: [uuid!]!) {
+  posts(order_by: {created_at: desc, likes_aggregate: {count: desc}, comments_aggregate: {count: desc}}, where: {user_id: {_nin: $feedIds}}) {
     id
     image
     likes_aggregate {

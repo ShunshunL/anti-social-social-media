@@ -1,6 +1,5 @@
-async function handleImageScanning() {
-  let url = "https://res.cloudinary.com/tokiwartooth/image/upload/v1591811377/aoav46tzcdgkxauyeu1r.jpg"
-  const response = await fetch('https://tokiwartooth.cognitiveservices.azure.com/', {
+async function handleImageScanning(url) {
+  const response = await fetch('https://eastus.api.cognitive.microsoft.com/vision/v3.0/analyze?visualFeatures=Objects&language=en', {
     method: 'POST',
     accept: 'application/json',
     headers: {

@@ -1,7 +1,5 @@
 {
   "version": 2,
-  "name": "antisocialsocialmedia",
-  "alias": "anti-social-social-media",
   "builds": [
     {
       "src": "package.json",
