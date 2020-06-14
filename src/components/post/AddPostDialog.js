@@ -27,19 +27,22 @@ const useAddPostDialogStyles = makeStyles(theme => ({
     flex: 1,
     fontWeight: 600
   },
-  paper: {
+  box: {
     display: 'flex',
-    alignItems: 'flex-start',
-    '& > *': {
-      margin: theme.spacing(1)
-    }
+    justifyContent: 'center',
+    marginTop: 10
   },
-  editor: {
-    flex: 1
+  paper: {
+    margin: '10px 20px',
+    width: 500,
+    height: 300
   },
+  // editor: {
+  //   width: 300
+  // },
   avatarLarge: {
-    width: theme.spacing(7),
-    height: theme.spacing(7)
+    width: 350,
+    height: 350,
   },
   input: {
     padding: '10px !important',
@@ -47,7 +50,8 @@ const useAddPostDialogStyles = makeStyles(theme => ({
   },
   root: {
     border: '1px solid #e6e6e6',
-    marginTop: '10px !important'
+    margin: '5px 20px',
+    width: 500
   },
   underline: {
     '&::before': {
@@ -107,14 +111,17 @@ function AddPostDialog({ postImg, handleClose }) {
         </Toolbar>
       </AppBar>
       <Divider />
-      <Paper className={classes.paper}>
-        <Avatar src={currentUser.profile_image} />
-        <Slate editor={editor} value={value} onChange={newValue => setValue(newValue)}>
-          <Editable className={classes.editor} placeholder="Write your caption..." />
-        </Slate>
-        <Avatar src={URL.createObjectURL(postImg)} className={classes.avatarLarge} variant="square" />
-      </Paper>
-      <TextField onChange={event => setLocation(event.target.value)} fullWidth placeholder="Location" InputProps={{ classes: {root: classes.root, input: classes.input, underline: classes.underline }, startAdornment: (<InputAdornment><PinDrop /></InputAdornment>)}} />
+      <div className={classes.box}>
+        <Avatar style={{ margin: '10px 50px' }} src={URL.createObjectURL(postImg)} className={classes.avatarLarge} variant="square" />
+        <div style={{ flexDirection: 'column'}}>
+          <Paper elevation={3} variant="outlined" className={classes.paper}>
+            <Slate editor={editor} value={value} onChange={newValue => setValue(newValue)}>
+              <Editable className={classes.editor} placeholder="Write your caption..." />
+            </Slate>
+          </Paper>
+          <TextField onChange={event => setLocation(event.target.value)} placeholder="Location" InputProps={{ classes: {root: classes.root, input: classes.input, underline: classes.underline }, startAdornment: (<InputAdornment><PinDrop /></InputAdornment>)}} />
+        </div>
+      </div>
     </Dialog>
   )
 }
