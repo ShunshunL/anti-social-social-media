@@ -11,6 +11,7 @@ import { useLazyQuery } from "@apollo/react-hooks"
 import { FIND_USER } from "../../graphql/queries"
 import { UserContext } from "../../App"
 import { isAfter } from "date-fns"
+import logoPhone from '../../images/logo-phone.png'
 // Navbar progress loading
 // import {useNProgress} from '@tanem/react-nprogress'
 
@@ -29,7 +30,12 @@ function Navbar({ minNav }) {
     {/* <Progress isAnimating={isLoadingPage} /> */}
     <AppBar className={classes.appBar}>
       <section className={classes.section}>
-        <Logo />
+        <Hidden xsDown>
+          <Logo />
+        </Hidden>
+        <Hidden smUp>
+          <SmallLogo />
+        </Hidden>
         {!minNav && <Search history={history} />}
         {!minNav && <Links path={path} />}
       </section>
@@ -46,6 +52,20 @@ function Logo() {
       <Link to="/">
         <div className={classes.logoWrapper}>
           <img src="https://fontmeme.com/permalink/200607/6b50f32a2790edff0cbdefd02aa12b9c.png" alt="Anti Social Social Media" className={classes.logo} />
+        </div>
+      </Link>
+    </div>
+  )
+}
+
+function SmallLogo() {
+  const classes = useNavbarStyles()
+
+  return (
+    <div className={classes.logoContainer}>
+      <Link to="/">
+        <div className={classes.logoWrapper}>
+          <img src={logoPhone} alt="Anti Social Social Media" />
         </div>
       </Link>
     </div>
