@@ -7,7 +7,7 @@ import ExploreGrid from '../components/explore/ExploreGrid'
 function ExplorePage() {
   return <Layout>
     <ExploreSuggestions />
-    <ExploreGrid />
+    {/* <ExploreGrid /> */}
   </Layout>
 }
 

@@ -105,7 +105,7 @@ function EditUserInfo({ user }) {
   const [open, setOpen] = React.useState(false)
 
   async function handleProfilePic(event) {
-     const url = await handleImageUpload(event.target.files[0])
+     const url = await handleImageUpload(event.target.files[0], 'avatar')
      console.log({url})
     const variables = { id: user.id, profileImage: url }
     await editUserAvatar({ variables })

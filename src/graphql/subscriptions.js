@@ -9,6 +9,7 @@ export const CURRENT_USER = gql`
     username
     profile_image
     last_checked
+    created_at
     followers {
       user {
         id 

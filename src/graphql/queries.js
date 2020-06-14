@@ -74,7 +74,7 @@ query getUserProfile($username: String!) {
         count
       }
     }
-    saved_posts {
+    saved_posts(order_by: { created_at: desc }) {
       post {
         image
         id
@@ -90,7 +90,7 @@ query getUserProfile($username: String!) {
         }
       }
     }
-    posts {
+    posts(order_by: { created_at: desc }) {
       image
       id
       likes_aggregate {
@@ -104,6 +104,21 @@ query getUserProfile($username: String!) {
         }
       }
     }
+  }
+}
+
+`
+
+// suggest followers to follow back, and also users created around the same time
+export const SUGGEST_USERS = gql`
+query suggestUsers($limit: Int!, $followerIds: [uuid!]!, $createdAt: timestamptz!) {
+  users(limit: $limit, where: {_or: [
+    { id: { _in: $followerIds }}, { created_at: { _gt: $createdAt}}
+  ]}) {
+		id 
+    username 
+    name
+    profile_image
   }
 }
 
