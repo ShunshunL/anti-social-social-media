@@ -65,7 +65,7 @@ function SmallLogo() {
     <div className={classes.logoContainer}>
       <Link to="/">
         <div className={classes.logoWrapper}>
-          <img src={logoPhone} alt="Anti Social Social Media" />
+          <img style={{ width: 32 }} src={logoPhone} alt="Anti Social Social Media" />
         </div>
       </Link>
     </div>
