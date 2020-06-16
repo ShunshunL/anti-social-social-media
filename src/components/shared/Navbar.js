@@ -12,6 +12,9 @@ import { FIND_USER } from "../../graphql/queries"
 import { UserContext } from "../../App"
 import { isAfter } from "date-fns"
 import logoPhone from '../../images/logo-phone.png'
+import swal from 'sweetalert';
+import Swal from 'sweetalert2'
+
 // Navbar progress loading
 // import {useNProgress} from '@tanem/react-nprogress'
 
@@ -146,6 +149,7 @@ function Links({ path }) {
   const hasNotifications = newNotifications.length > 0
   const [showTooptip, setTooptip] = React.useState(hasNotifications)
 
+
   React.useEffect(() => {
     const timeout = setTimeout(handleHideTooptip, 5000)
     return () => {
@@ -177,6 +181,7 @@ function Links({ path }) {
   function handleClose() {
     setAddPostDialog(false)
   }
+
   
   return (
     <div className={classes.linksContainer}>
@@ -185,6 +190,7 @@ function Links({ path }) {
         {addPostDialog && <AddPostDialog postImg={postImg} handleClose={handleClose} />}
         <Hidden xsDown>
           <input type="file" style={{ display: "none"}} ref={inputRef} onChange={handleAddPost} />
+          {/* openFileInput */}
           <AddIcon onClick={openFileInput} />
         </Hidden>
         <Link to="/">
