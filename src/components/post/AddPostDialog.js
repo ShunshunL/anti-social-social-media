@@ -13,8 +13,8 @@ import { useMutation } from '@apollo/react-hooks'
 import { CREATE_POST } from '../../graphql/mutation'
 import { useHistory } from 'react-router-dom'
 import swal from 'sweetalert';
-import { LoadingLargeIcon } from "../../icons";
-import LoadingScreen from '../shared/LoadingScreen'
+// import { LoadingLargeIcon } from "../../icons";
+import Spinner from '../shared/Spinner'
 
 const useAddPostDialogStyles = makeStyles(theme => ({
   appBar: {
@@ -164,7 +164,7 @@ function AddPostDialog({ postImg, handleClose }) {
         </Toolbar>
       </AppBar>
       <Divider />
-      {spinner && <LoadingScreen />}
+      {spinner && <Spinner />}
       <div className={classes.box}>
         <Avatar style={{ margin: '10px 50px' }} src={URL.createObjectURL(postImg)} className={classes.avatarLarge} variant="square" />
         <div style={{ flexDirection: 'column'}}>
