@@ -12,9 +12,6 @@ import { FIND_USER } from "../../graphql/queries"
 import { UserContext } from "../../App"
 import { isAfter } from "date-fns"
 import logoPhone from '../../images/logo-phone.png'
-import swal from 'sweetalert';
-import Swal from 'sweetalert2'
-
 // Navbar progress loading
 // import {useNProgress} from '@tanem/react-nprogress'
 
