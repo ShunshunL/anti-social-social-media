@@ -29,7 +29,7 @@ function LoginPage() {
       if (!validator.isEmail(authInput)) {
         authInput = await getUserEmail(authInput)
       }
-      console.log(authInput)
+      // console.log(authInput)
       await signInWithEmailAndPassword(authInput, password)
       setTimeout(() => history.push('/'), 0) 
     } catch(error) {

@@ -92,6 +92,7 @@ function AuthProvider({ children }) {
         profileImage: defaultUserImg
       }
       await createUser({ variables })
+      await signInWithEmailAndPassword(formData.email, formData.password)
     }
   }
 

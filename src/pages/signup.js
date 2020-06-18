@@ -9,6 +9,7 @@ import validator from 'validator';
 import { HighlightOff, CheckCircleOutline } from '@material-ui/icons'
 import { useApolloClient } from "@apollo/react-hooks"
 import { CHECK_USERNAME } from "../graphql/queries"
+// import { FOLLOW_USER } from "../graphql/mutation"
 
 function SignUpPage() {
   const classes = useSignUpPageStyles()
@@ -23,12 +24,22 @@ function SignUpPage() {
   const { register, handleSubmit, errors, formState } = useForm({ mode: 'onBlur' })
   const [error, setError] = React.useState('')
   const client = useApolloClient()
+  // const [followUser] = useMutation(FOLLOW_USER)
+  // const [getUserProfile] = useQuery(GET_USER_PROFILE)
 
+  
   async function onSubmit(data) {
-    console.log(data)
     try{
       setError('')
       await signUpWithEmailAndPassword(data)
+      // // call setDefaultFollowing to newly created user
+      // const userName = {username: data2.usename}
+      // const {data} = getUserProfile({ userName })
+      // const variables = {
+      //   userIdToFollow: 'dad2d041-0c45-4a69-9f52-7053b522b786',
+      //   currentUserId: data.users[0].id
+      // }
+      // followUser({ variables })
       setTimeout(() => history.push('/'), 0)
     } catch(error) {
       console.error('Error signing up', error)
