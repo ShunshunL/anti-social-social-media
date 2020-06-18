@@ -4,13 +4,11 @@ import { usePostModalStyles } from "../../styles"
 import Modal from 'react-modal'
 import Post from './Post'
 import { CloseIcon } from '../../icons'
-import { el } from "date-fns/locale"
 
 function PostModal() {
   const classes = usePostModalStyles()
   const history = useHistory()
   const { postId } = useParams()
-  Modal.setAppElement(el)
 
   return (
     <>
