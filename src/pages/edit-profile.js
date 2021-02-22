@@ -36,7 +36,7 @@ function EditProfilePage({ history }) {
     "Manage Contacts",
     "Privacy and Security",
     "Login Activity",
-    "Emails from Instagram"
+    "Emails from ASSM"
   ]
 
   function handleSelected(index) {
